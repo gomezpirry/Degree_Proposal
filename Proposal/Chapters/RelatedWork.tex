@@ -1,0 +1,118 @@
+\chapter{Estado del Arte}
+\label{chap:related}
+
+\section{Entrenamiento de Diccionarios}
+
+Uno de los elementos fundamentales para el CS es la selecci\'on del diccionario, ya que con un buen diccionario se pueden garantizar una mejor reconstrucci\'on de una se\~nal. Para la seleci\'on del diccionario se pueden usar muestras extraidas directamente de la se\~nal que se debe reconstruir o de una se\~nal con caracter\'isticas similares, o se puede realizar un entrenamiento del diccionario para que se adapte a las condiciones de la se\~nal \cite{dictionaries}. A continuaci\'on se presenta una revisi\'on de los prinicpales algoritmos de entrenamiento. 
+
+\subsection{M\'etodo de direcciones \'optimas }
+El M\'etodo de Direcciones \'Optimas (MOD) fue propuesto por Eagan \textit{et al.} en 1999 \cite{omp} para fines de compresi\'on de se\~nales. Los principales pasos del algoritmo MOD son:
+\begin{enumerate}
+\item Inicialmente se tienen un $\bm{y}_i$, $i=1,2, .., K$ como conjunto de entrenamiento, un $\bm{D}_0$ de tama\~no $N \times M$ y un contador $c = 1$ 
+\item Se aproxima cada vector de entrenamiento $\bm{y}_i$, usando un algoritmo para seleccionar el vector disperso 
+\begin{equation}
+\bm{\widetilde{y}}_i=\bm{Dx} = \sum \limits_{j=1}^{M} \bm{x}_i(j) \bm{d}_j
+\end{equation}
+donde $\bm{x}_i(j)$ es el coeficiente correspondiente al vector $\bm{d}_j$. Una vez se obtiene la aproximaci\'on $\bm{\widetilde{y}}_i$, se calculan los valores residuales entre la aproximaci\'on y la se\~nal original
+\item \label{new} Dadas las aproximaciones y el residual, se calcula un nuevo diccionario $\bm{D}_i$ usando los vectores \'optimos $\bm{\delta}_i$ en
+\begin{equation}
+\bm{\widetilde{D}}_i= \bm{D}_i + \bm{\delta}_i
+\end{equation}
+\item Se vuelven a calcular nuevas aproximaciones y residuales, si no se cumple la condici\'on de parada se actualiza el contador $c = c + 1$ y se realiza de nuevo el paso \ref{new}. Los criterios de parada pueden ser un n\'umero de iteraciones o una restricci\'on en el residual.
+\end{enumerate}
+
+Dado que la soluci\'on del problema del vector disperso es NP-Hard, solo se puede hallar una soluci\'on aproximada con la desventaja de caer en m\'inimos locales.  
+
+\subsection{K-SVD}
+El algoritmo de aprendizaje K-SVD es una generalizaci\'on del algortimo K-means mediante descomposici\'on en valores singulares (SVD) y fue propuesto por Elad \textit{et al.} en 2005 \cite{k-svd}. El K-SVD, al igual que el MOD, realiza un proceso de selecci\'on del vector disperso y uno de actualizaci\'on del diccionario, con la diferencia que la actualizaci\'on se realiza por \'atomos del diccionario y no en su totalidad. El K-SVD busca representar una muestra $\bm{y}_i$ resolviendo una funci\'on objetivo mediante los siguientes pasos:
+\begin{enumerate}
+\item Inicialmente se tiene un diccionario $\bm{D}_0$ y una variable de conteo $j=1$
+\item \label{alg:ksvd} Usando alg\'un algoritmo de selecci\'on de vector disperso, basado en la norma $\ell_0$ o $\ell_1$, se calcula $\bm{x}_i$ para cada muestra $\bm{y}_i$, aproximando la soluci\'on a
+\begin{equation}
+\min_{\bm{x}_i}\{||\bm{y}_i-\bm{Dx}_i||_2^2\}\;\; \text{sujeto a} \;\; \forall_i, ||\bm{x}_i||_0 \leq T_0 
+\end{equation}
+donde $T_0$ es un valor de error en la aproximaci\'on
+\item Cada \'atomo $K = 1,2,...,N$ en $D_{j-1}$ es actualizado por el siguiente algoritmo:
+\begin{itemize}
+\item Se define un conjunto de muestras que usan ese \'atomo, $ \omega_i = \{ i|1 \leq i \leq N, \bm{x}_T^k(i) \neq 0\}$
+\item Se calcula el error de la $E_k$ mediante
+\begin{equation}
+E_k = \bm{y}-\sum \limits_{j\neq k} \bm{d}_j \bm{x}_T^j
+\end{equation}
+\item Se rentringue $E_k$ seleccionando solo las columnas que corrsponden a $\omega_k$
+\item Se aplica la descomposici\'on en valores singulares de $E_T^R = U\Delta V^T$. Se selecciona la columna $\widetilde{\bm{d}}_k$ para ser la primera columna de $U$ y se actualiza la vector de coeficiente $\bm{x}_R^k$ como primer columna de $V$ multiplicado por $\Delta (1,1)$
+\end{itemize}
+\item Si no se cumple el criterio de parada se incrementa el contador $j = j+1$ y se retorna al paso \ref{alg:ksvd}. 
+\end{enumerate}
+Al igual que el MOD, el K-SVD presenta problemas de m\'inimos locales, pero la actualizaci\'on por \'atomos le permite que el proceso de entrenamiento sea m\'as r\'apido.
+
+\subsection{Algoritmo de Aprendizaje en linea}
+El algoritmo de entranamiento en linea fue propuesto por Mairal \textit{et al.} en 2010 \cite{online} y se basa en aproximaciones estoc\'asticas. El algoritmo en linea se describe a continuaci\'on:
+\begin{enumerate}
+\item Inicialmente se tiene un diccionario $\bm{D}_0$, un n\'umero $j$ de iteraciones y un par\'ametro de regularizaci\'on $\lambda$
+\item Se crean las matrices $\bm{A} \in \mathbb{R}^{K \times K}$ y  $\bm{B} \in \mathbb{R}^{M \times K}$ y se inicializan con valor 0
+\item Se toman muestras de $\bm{y}_j$ basados en una distribuci\'on de probabilidad $p$
+\item Se halla el vector disperso usando el algoritmo de regersi\'on de menor \'angulo (LARS) \cite{lars}
+\begin{equation}
+\min_{\bm{x}_k} \frac{1}{2}||\bm{y}_j-\bm{D}_{j-1}\bm{x}||^2_2+\lambda||\bm{x}||_1
+\end{equation}
+\item Se asignan valores a las matrices $\bm{A}_j = \bm{A}_{j-1}+\bm{x}_j\bm{x}_j^T$ y $\bm{B}_j = \bm{B}_{j-1}+\bm{y}_j\bm{x}_j^T$ 
+\item Se calcula $\bm{D}_j$ actualizando la columna $j$ desde $j=1$ hasta $j=k$ teniendo en cuenta que $\bm{D} =[\bm{d}_1, \ldots, \bm{d}_k]$, $\bm{A} =[\bm{a}_1, \ldots, \bm{a}_k]$ y $\bm{B} =[\bm{b}_1, \ldots, \bm{b}_k]$. Este proceso se realiza hasta que converja hasta un l\'imite
+\begin{align}
+\bm{u}_j &= \frac{1}{\bm{A}_{jj}}(\bm{b}_j - \bm{Da}_j) + \bm{d}_j, \\
+\bm{d}_j &= \frac{1}{\max(||\bm{u}_j||_2, 1)\bm{u}_j}
+\end{align}
+\item Luego $\bm{D}_j$ es calculado usando
+\begin{align}
+\bm{D}_j &= \min_{\bm{D}} \frac{1}{t}\sum \limits_{i=1}^j\frac{1}{2}||\bm{y}_i-\bm{Dx}_i||_2^2+\lambda||\bm{x}||_1
+\end{align}
+\end{enumerate}
+
+Este algoritmo funciona bien para grandes cantidades de datos ya que se actualiza gradualmente mientras se esperan otros datos.
+
+\section{Codificaci\'on de video usando Compressed Sensing}
+\label{sec:codificacion_dispersa}
+Uno de los enfoques de la CS es la compresi\'on de se\~nales. En el caso del video, se integran las t\'ecnicas de CS con los procesos involucrados en la codificaci\'on de video para representar la informaci\'on con una cantidad menor de muestras. Para obtener el diccionario, en algunos casos se seleccionan directamente bloques de la imagen con ciertas caracter\'isticas  y en otros se aplican algoritmos de entrenamiento del diccionario. Inicialmente se trabajaban con diccionarios preseleccionados debido a la complejidad que involucraba el entrenamiento, por ejemplo  Stankovic \textit{et al.}, en una de las primeras propuestas de CS en video \cite{stankovic2008compressive}, integran las t\'ecnicas de CS para representar los frames que no son im\'agenes de referencia evaluando la dispersi\'on del frame de referencia. Como diccionario se selecciona una combinaci\'on de una matriz aleatoria de distribuci\'on gausiana y la transformada discreta del coseno (DCT) de cada bloque. La DCT de cada bloque del frame de referencia se compara con una constante, y si el valor es mayor, todos los bloques co-localizados en los frames que no son de referencia son muestreados compresivamente usando el algoritmo de correspondencias ortogonales.  
+
+En \cite{do2009distributed}, Do \textit{et al.} combinan los conceptos de CS con la codificaci\'on de video distribuida, donde se translada la complejidad de la codificaci\'on al lado del decodificador. En el codificador se seleccionan frames claves, que son codificados con m\'etodos tradicionales, y los frames no claves que son codificados explotando la dispersion en la predicci\'on inter-frame y recuperando la informaci\'on dispersa en el decodificador. Como muestras para construir el diccionario se usan los bloques vecinos co-localizados en los frames clave. Cheng \textit{et al.} realizan una propuesta similar en \cite{chen2010dictionary}, con la diferencia de que el diccionario es entrenado usando el algoritmo K-SVD. 
+
+En \cite{haixiao_dictionary_2011}, Haixiao \textit{et al.} usan el proceso de estimaci\'on de movimiento para el entrenamiento del diccionario. El diccionario es inicializado usando bloques transformados de la imagen de referencia y la actualizaci\'on del diccionario se realizan estimando la reconstrucci\'on del frame actual mediante la compensaci\'on de movimiento. La evaluaci\'on del diccionario se realiza por medio de cada unidad de codificaci\'on que compone la imagen. Tambi\'en
+se debe tener en cuenta un proceso de filtrado para remover artefactos de bloques en las im\'agenes y mejorar la calidad en la imagen reconstruida.
+
+En \cite{kang_efficient_2011}, Kang \textit{et al.} proponen un modelo para entrenar el diccionario con los residuales de las muestras predecidas. Estas muestras deben ser clasificicadas de acuerdo al contexto ya que todas no pueden ser usadas para el entrenamiento. La clasificaci\'on es realizada mediante caracter\'isticas espec\'ificas de las muestras como la direcci\'on en la predicci\'on intra-frame o la energ\'ia gastada en codificaci\'on para la predicci\'on inter-frame. Como algoritmo de entrenamiento se usa el K-SVD  y para transmitir el diccionario al decodificador se usa un \'indice del diccionario con una bandera que indica de cual vecino es copiado, de esta forma solo se transmiten los coeficientes que cambian respecto al vecino.
+
+En \cite{wahidah_compressive_2012}, Wahidah \textit{et al.} proponen un modelo de codificaci\'on de video usando la dispersi\'on din\'amica de la fuente, modelando la se\~nal de video en el dominio disperso usando la DCT o la transformada de \textit{wavelet}. La din\'amica de la escena es medida con el n\'umero de coeficientes no significativos y se establece un umbral con un valor peque\~no para tomar una menor cantidad de coeficientes. El modelo propuesto usa un diccionario predefinido y por cada imagen en el grupo de im\'agenes se eval\'ua si es v\'alido como frame disperso, de lo contrario se codifica con m\'etodos tradicionales.  
+
+En \cite{xiong2013sparse}, Xiong \textit{et al.} proponen un modelo de aprendizaje adaptativo regularizado para esquemas de codificaci\'on de video con bajas tasas de bits. El modelo propuesto selecciona  frames claves que son codificados en resoluci\'on original mientras el resto son codificados en una version de baja resoluci\'on del frame y son reconstruidos mediante la representaci\'on dispersa  de los frames claves, entrenando los diccionarios con el algoritmo K-SVD teniendo en cuenta los cambios temporales y espaciales de las muestras.
+
+En \cite{sun2012online}, Sun \textit{et al.} proponen el aprendizaje del diccionario desde frames previos para codificar  el video mediante la representaci\'on dispersa de los frames que llegan a codificar. El diccionario es inicializado con bloques de la imagen los cuales han sido transformados usando la DCT. El diccionario se entrena mediante el algoritmo de entramiento en linea y se actualiza cada cierta cantidad de im\'agenes. Para sincronizar el diccionario con el decodificador se envia el residual entre el diccionario actualizado y el diccionario previo.
+
+En \cite{song_omp-based_2016}, Song \textit{et al.} proponen un un diccionario adaptativo para el proceso de transformaci\'on en el HEVC usando el algoritmo de b\'usqueda de correspondencias ortogonales. La construcci\'on del diccionario se realiza explotando las correlaciones no locales a partir de regiones reconstruidas (predicci\'on inter-frame), en este caso el diccionario no es entrenado. Los bloques para el diccionario se seleccionan basados en el residual de la compensaci\'on de movimiento.
+
+Dai \textit{et al.} proponen en \cite{dai_sparse_2016} un algoritmo para aumentar la convergencia del aprendizaje del diccionario incorporando un gradiente descendente estoc\'astico. Esta propuesta maneja el mismo principio de baja y alta resoluci\'on de \cite{xiong2013sparse} pero el diccionario es entrenado usando el entrenamiento en linea.  
+
+He \textit{et al.} proponen en \cite{he_improvement_2016} reemplazar la predicci\'on intra-frame, calculando el mapeo
+contractivo disperso para aproximar el frame intra y el siguiente frame con predicci\'on inter-frame, y eliminando los bloques de frames intra, basados en errores de aproximaci\'on producidos en el mapeo contractivo. En esta propuesta el diccionario  es construido usando trozos de la imagen que son rotados o con bloques generados por las direcciones de la predicci\'on intra.
+
+\section{Codificaci\'on de video perceptual}
+\label{sec:codificacion_perceptual}
+
+Las t\'ecnicas de codificaci\'on de video perceptual tienen en cuenta caracter\'isticas del HVS como punto final del proceso de codificaci\'on. Dentro de las caracter\'isticas que tienen en cuenta se encuentran la sensitividad al contraste, donde un est\'imulo no es visto por su frecuencia, el enmascaramiento, donde un est\'imulo reduce la visibilidad de otro est\'imulo, la fovea que indica el \'angulo de visi\'on del ojo humano y la atenci\'on visual que indica los aspectos particulares donde se enfoca la visi\'on \cite{perceptual}. Los modelos de codificaci\'on perceptual buscan explotar estas condiciones para darle una mayor importancia a ciertas regiones de las im\'agenes del video.
+
+\subsubsection{Regiones de inter\'es}
+
+Las regiones de inter\'es buscan detectar zonas de los frames de video donde se debe mantener alto nivel de calidad. Las regiones de inter\'es pueden ser definidas por el usuario o pueden ser detectadas autom\'aticamente. En \cite{meddeb2014region}, Meddeb \textit{et al.} proponen un modelo para asignar una mayor cantidad de bits a regiones de inter\'es para sistemas de video conferencia. El algoritmo detecta autom\'aticamente regiones de inter\'es, que son principalmente rostros. En \cite{6782435}, Xu \textit{et al.} proponen un modelo de percepci\'on jer\'arquico de detecci\'on de rostros para video conversacional. En este modelo se da una ponderaci\'on a cada componente del rostro (ojos, labios entre otros).
+
+\subsubsection{Distorsi\'on apenas notable}
+La distori\'on apenas notable (JND) aprovecha los mecanismos de enmascaramiento del HVS, que se refiere al m\'aximo nivel distorsi\'on que no se puede percibir y que se encuentra bajo un umbral de sensitividad visual. Con estos mecanismos las regiones donde la distortsi\'on es m\'as notable tienen una mayor importancia. Kim \textit{et al.} presentan en \cite{kim_hevc-compliant_2015} un modelo JND en el dominio de los pixeles para transformar el modo \textit{skip} del HEVC en el dominio de la transformada. Como caracter\'isticas espaciales en el dominio de la transformada se tienen en cuenta la sensitividad al contraste, la adaptaci\'on a la luminancia y los efectos de enmascaramiento del contraste.
+
+\subsubsection{Saliencia visual}
+La saliencia representa la probabilidad de que el HVS preste atenci\'on a ciertos objetos del frame en lugar de otros. La saliencia es representada en un mapa, generalmente en escala de grises, donde se muestra la ubicaci\'on de los objetos con respecto a sus vecinos. En \cite{saliency}, Wei \textit{et al.} construyen el mapa de saliencia usando un algoritmo basado en la estructura local de los datos, calculado mediante un kernel de direcci\'on local, y  una medida de auto-semejanza. En \cite{wang_perceptual_2014} propone un modelo que combine el modelo de atenci\'on visual y el modelo de sensitividad visual. Para este modelo se expresa la imagen como un producto de un pixel en el dominio de JND y un factor de modulaci\'on de saliencia. Para el modelo JND espacial se establece un umbral despu\'es de aplicar la DCT a los bloques de la imagen.
+
+\section{Codificaci\'on de Video usando Representaci\'on Dispersa y Codificaci\'on Perceptual}
+\label{sec:codificacion_dispersa_perceptual}
+
+Algunas propuestas se basan en las t\'ecnicas de CS para codificaci\'on de video teniendo en cuenta las caracter\'isticas perceptuales del HVS. En \cite{elsayed_perceptual-based_2015} proponen dos frameworks, uno que se encargue de la predicci\'on intra-frame y otro que se encargue de la predicci\'on inter-frame. En la predicci\'on intra-frame las im\'agenes son adquiridas y recuperadas cada una por separado, mientras en la predicci\'on inter-frame, las im\'agenes son adquiridas y recuperdas basadas en la correlaci\'on que tienen con im\'agenes de referencia utilizando el residual. Como medida de percepci\'on para el c\'alculo de la representaci\'on dispersa de la se\~nal se usan las frecuencias m\'as bajas en el dominio
+de la DCT. Tambi\'en se usa una ponderaci\'on est\'atica para explotar regiones con baja frecuencia. En esta propuesta el diccionario es contruido con los coeficientes de la DCT ponderados mediante una matriz de pesos. Xu \textit{et al.} proponen en \cite{xu_perceptually-aware_2015} un modelo basado en la estimaci\'on de la correlaci\'on del ruido entre un frame no clave y su representaci\'on en el codificador y explotando la interpolaci\'on de los bloques que usan compensaci\'on de movimiento con lo cual se obtiene la correlaci\'on temporal entre frames reconstruidos en el lado de la informaci\'on. Con esta informaci\'on se calcula la saliencia espacial y temporal de los bloques de la imagen para definir cuales pueden ser reconstruidos usando CS. 
+
+

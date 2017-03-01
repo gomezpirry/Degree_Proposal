@@ -1,0 +1,87 @@
+\chapter{Problem}
+\label{chap:problem}
+
+\section{Problem Statement}
+
+The advence in new video technologies suggest new resolution size (
+4k(3840$\times$2160px) or 8k(7680$\times$4320px)), an increasing in the frame
+rate (60fps - 120 fps) and an increasing in the  color representation formats
+(10 bits and 12 bits). Moreover, the advance in differents technologies, as
+cloud computing, have promoted the use of video-based services, such as 
+streaming, video-conference, video-on-demand, IPTV, broadcasting, among others,
+which have generated an significant increment in the amount of information
+neccesary for representing a video. By example, Table \ref{fig:youtube} shows
+the bit-rate required for representing a live streaming video through YouTube
+with a specific resolution\footnote{\url{https://support.google.com/youtube/answer/2853702}}.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Resolution} & \textbf{Bit-rate Min (Kbps)} & \textbf{bit-rate Max (Kbps)} \\
+\hline
+2560$\times$1440$@$60 & 9000 & 18000 \\
+\hline
+2560$\times$1440$@$30 &  6000 & 13000  \\
+\hline
+1920$\times$1080$@$60 & 4500 & 9000\\
+\hline
+1920$\times$1080 & 3000 & 6000 \\
+\hline
+\end{tabular}
+\caption{Bit-rate requirements for some video resolutions in live
+streaming video for YouTube}
+\label{fig:youtube}
+\end{table}
+
+in addition to high bit-rate requeriments, there are limitations in bandwidth in
+some geographic regions, for example, Latin America has a internet speed
+connection of 7.26 Mbps on average for fixed networks and 4 Mbps for mobile
+networks on average \cite{cepal}. The high bit-rates and bandwidth limitations
+involve continuous efforts to maximize the coding efficiency, i.e. reducing the
+bit rate, keeping the video quality.
+
+The conventional video encoders, as HEVC or VP9, use differents techniques for
+exploting the statistical, psicovisual and coding redundancies present in a
+video. This techniques have been widely deployed and now is neccesary to adapt
+to conventional video encoders others strategies that can to maximize the
+compression capacity. 
+
+The sparse representation emerge as alternative for improving the coding
+eficiency, exploiting the sparsity propierties of signals for compressing with a
+small amount of samples in terms of a base called dictionary. The sparse
+representation is generated solving an optimization problem of $\ell_p$-norm of
+sparse vector, such that lineal combination between the dictionary and the
+sparse vector aproximate the original signal. A key problem of sparse
+representation is the dictionary selection, because a good dictionary can to
+guarantee a better signal reconstruction. The dictionary can be constructed with
+samples extracted directly of the signal or can be trained for adapt it to
+signal. The training process of dictionary consists of initialization step and
+an iterative process of updating based on optimization problem of $\ell_p$-norm.
+The updating process depends on convergence of the problem and should be
+searched strategies for increasing the speed of convergence, due to the
+dictionary training aggregate a significant computational cost.
+
+
+
+\section{Problem Formulation}
+How to optimize the training process of the dictionary of modeling of sparse
+representation for video coding?
+
+\section{Objectives}
+\subsection{General Objective}
+To Optimize the training process of dictionary for modelling the sparse
+representation for video coding
+
+\subsection{Specific objectives}
+\begin{itemize}
+\item Reducing the training time of a dictionary for sparse
+representation based on video signals samples Reducir el tiempo de entrenamiento
+\item Design a training model of dictionary that integrate perceptual coding
+methods
+\item To minimize the reconstruction error of the video signal when
+using the traning model designed
+\item To implement the designed model adapting to video coding
+software 
+\end{itemize}
+

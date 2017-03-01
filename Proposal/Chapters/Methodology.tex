@@ -1,0 +1,195 @@
+\chapter{Metodolog\'ia}
+\label{chap:methodology}
+
+
+Para este proyecto se propone usar una metodolog\'ia de investigaci\'on con un componente pr\'actico. En la fase inicial, el proyecto se enfoca en la exploraci\'on de conocimiento, herramientas y t\'ecnicas relacionadas al problema que se va a trabajar, lo cual permite en la fases siguientes del proyecto, dise\~nar e implementar un prototipo basado en la informaci\'on recolectada en una perspectiva de investigaci\'on. Este proyecto esta dividido en cuatro fases: la primera fase se enfoca en revisar en detalle los m\'etodos de codificaci\'on perceptual y t\'ecnicas de selecci\'on y entrenamiento de diccionarios. La segunda fase se centra en el dise\~no de un modelo de selecci\'on de diccionarios que integre t\'ecnicas de codificaci\'on perceptual. La tercera fase es la implementaci\'on del modelo dise\~nado y la cuarta fase consiste en realizar las pruebas del modelo implementado.  A continuaci\'on se describe cada una de las fases.
+
+\begin{description}
+\item[Fase I:] En esta fase se revisa, replica y analiza en detalle los diferentes m\'etodos de selecci\'on y entrenamiento de diccionarios. Esta an\'alisis se hace en t\'erminos de tiempo de convergencia y exactitud en la reconstrucci\'on. Tambi\'en son revisados y analizados los m\'etodos de codificaci\'on perceptual, en t\'erminos de la selecci\'on de \'areas de  intere\'es. Esta revisi\'on se realiza para entender los conceptos y variables que se involucraran en el proyecto y se espera como resultado de esta fase un documento de resultados de la evaluaci\'on de los m\'etodos, basados en los t\'erminos descritos.  
+\item[Fase II:] En esta fase se dise\~na un  modelo de selecci\'on del diccionario que vincule las t\'ecnicas del proceso de codificaci\'on perceptual. Este modelo debe ser probado y comparado con los m\'etodos analizados en la revisi\'on de propuestas de la fase anterior, en t\'erminos del tiempo de convergencia y la exactitud en la reconstrucci\'on. Para la evaluaci\'on se debe implementar un prototipo de prueba del modelo. Como resultado de esta fase se espera obtener un prototipo del modelo de selecci\'on del diccionario y un documento con los resultados de la comparaci\'on con otras propuestas. 
+\item[Fase III:] Basado con los resultados obtenidos en la fase previa, se debe integrar el prototipo del modelo propuesto al software de referencia de un est\'andar de codificaci\'on. El prototipo se debe integrar tanto al proceso de codificaci\'on como al proceso de decodificaci\'on y se debe establecer un mecanismo para transferir la informaci\'on de la representaci\'on dispersa (diccionario y vectores dispersos) entre los dos procesos.  Como resultado de esta fase se espera tener un software de codificaci\'on de video que realize un proceso de CS con m\'etodos de codifcaci\'on perceptual.
+
+\item[Fase IV:] En esta fase, un conjunto de secuencias de video son seleccionadas para realizar las pruebas. Las secuencias de video deben tener diferentes resoluciones (4k, 2k, full HD) y diferentes tipos de contenido (poco/mucho movimiento, cambios de escenas, objetos con texturas). Tambi\'en se deben definir unos entornos de prueba y los criterios de evaluaci\'on y comparaci\'on para la tasa de bits, la calidad del video y los tiempos de codificaci\'on. Despu\'es de realizar las pruebas, se analizan los resultados y se definen las conclusiones y los trabajos futuros a realizar en base a los resultados del proyecto. Como resultado de esta fase se espera obtener un documento con los resultados de las pruebas y un documento de conclusiones y trabajo futuro.
+\end{description}
+Dentro de cada una de estas fases, se realizan una serie de actividades con el fin de cumplir cada uno de los objetivos propuestos. La tabla \ref{tab:activities} presenta las actividades a desarrollar en el proyecto.
+
+
+\section{Actividades}
+
+\small
+\begin{longtable}{|p{0.1\linewidth}|m{0.4\linewidth}|p{0.4\linewidth}|p{0.23\linewidth}|}
+\hline
+\textbf{Fase}  & \textbf{Actividad} & \textbf{Resultados Esperados}\\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Fase}  & \textbf{Actividad} & \textbf{Resultados Esperados} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{4}{|c|}{Contin\'ua el la siguiente p\'agina} \\
+\hline
+\endfoot
+\endlastfoot
+
+\multirow{4}{*}{Fase I} & Recolectar informaci\'on sobre algoritmos de selecci\'on de diccionarios para representaci\'on dispersa & \multirow{4}{\linewidth}{
+\begin{itemize}[leftmargin=*]
+    \item Documento de resultados de la evaluaci\'on de los m\'etodos basados en los t\'erminos descritos
+\end{itemize}}\\
+\cline{2-2}
+  & Recolectar informaci\'on sobre m\'etodos de codificaci\'on perceptual & \\
+\cline{2-2}
+  & Replicar en un entorno de  video los algoritmos y m\'etodos revisados  & \\
+\cline{2-2}
+  & Construir una tabla de resultados para los algoritmos replicados & \\
+ \cline{2-2}
+  & Analizar los resultados de los algoritmos replicados & \\
+\hline
+\multirow{4}{*}{Fase II} & Escojer un algoritmo de selecci\'on de diccionario y algunos m\'etodos de codificaci\'on perceptual en base a los resultados obtenidos en la evaluaci\'on & \multirow{5}{\linewidth}{
+\begin{itemize}[leftmargin=*]
+    \item Prototipo del modelo de selecci\'on del diccionario 
+    \item Documento con los resultados de la comparaci\'on con otras propuestas
+\end{itemize}} \\
+\cline{2-2}
+  & Definir el modelo de integraci\'on del algoritmo de selecci\'on de diccionarios y codificaci\'on perceptual & \\
+\cline{2-2}
+  & Implementar un prototipo del modelo definido & \\
+ \cline{2-2}
+   & Evaluar el prototipo implementado en t\'erminos de rendimiento y exactitud & \\
+ \cline{2-2}
+   & Construir una tabla de resultados para el modelo implementado & \\
+ \cline{2-2}
+  & Analizar los resultados del modelo implementado & \\
+\hline
+ & Seleccionar un software de de referencia de un est\'andar de codificaci\'on de video &  \\
+\cline{2-2}
+ \multirow{4}{*}{Fase III} & Definir un m\'etodo de integraci\'on del prototipo dise\~nado al software de referencia & \multirow{4}{\linewidth}{
+\begin{itemize}[leftmargin=*]
+    \item Software de codificaci\'on de video que realize un proceso de CS con m\'etodos de codifcaci\'on perceptual
+\end{itemize}}\\
+ \cline{2-2}
+  & Definir una estrategia de transferencia del diccionario y vectores dispersos al decodificador  & \\
+\cline{2-2}
+  & Implementar el prototipo dise\~nado en el software de referencia & \\
+\hline
+\multirow{5}{*}{Fase IV}  & Seleccionar las m\'etricas de prueba y las secuencias de video & \multirow{5}{\linewidth}{
+\begin{itemize}[leftmargin=*]
+    \item Documento con los resultados de las pruebas 
+    \item Documento de conclusiones y trabajo futuro
+\end{itemize}}\\
+\cline{2-2}
+  & Probar el proceso de codificaci\'on en el software de referencia sin modificaciones   & \\
+ \cline{2-2}
+   & Probar el proceso de codificaci\'on en el software de referencia con la implementaci\'on del modelo & \\
+   \cline{2-2}
+   & Construir una tabla de resultados para las pruebas realizadas  & \\
+  \cline{2-2}
+   & Analizar los resultados obtenidos y presentar las conclusiones y trabajo futuro & \\
+\hline
+\caption{Actividades}
+\label{tab:activities}
+\end{longtable}
+
+\newpage
+\section{Cronograma}
+
+\normalsize
+%\begin{longtable}{|p{0.4\linewidth}|c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c|}
+
+%\hline
+%\multirow{2}{*}{Activities} & \multicolumn{32}{c|}{Week} \\
+
+%\cline{2-32}
+%  & {1} & \tiny{2} & \tiny{3} & \tiny{4} & \tiny{5} & \tiny{6} & \tiny{7} & \tiny{8} & \tiny{9} & \tiny{10} & \tiny{11} & \tiny{12} & \tiny{13} & \tiny{14} & \tiny{15} & \tiny{16} & \tiny{17} & \tiny{18} & \tiny{19} & \tiny{20} & \tiny{21} & \tiny{22} & \tiny{23} & \tiny{24} & \tiny{25} & \tiny{26} & \tiny{27} & \tiny{28} & \tiny{29} & \tiny{30} & \tiny{31} & \tiny{32}\\
+%  \hline
+%\endfirsthead
+
+%\hline
+%\multirow{2}{*}{Activities} & \multicolumn{32}{c|}{Week} \\
+%\cline{2-32}
+
+ % & \tiny{1} & \tiny{2} & \tiny{3} & \tiny{4} & \tiny{5} & \tiny{6} & \tiny{7} & \tiny{8} & \tiny{9} & \tiny{10} & \tiny{11} & \tiny{12} & \tiny{13} & \tiny{14} & \tiny{15} & \tiny{16} & \tiny{17} & \tiny{18} & \tiny{19} & \tiny{20} & \tiny{21} & \tiny{22} & \tiny{23} & \tiny{24} & \tiny{25} & \tiny{26} & \tiny{27} & \tiny{28} & \tiny{29} & \tiny{30} & \tiny{31} & \tiny{32} \\
+ % \hline
+%\endhead
+
+%\hline
+%\multicolumn{33}{|c|}{Continued on the next page} \\
+%\hline
+%\endfoot
+%\endlastfoot
+
+\begin{table}[!h]
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|p{0.4\linewidth}|c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c|}
+\hline
+\multirow{2}{*}{Actividades} & \multicolumn{32}{c|}{Semana} \\
+\cline{2-33}
+ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & 21 & 22 & 23 & 24 & 25 & 26 & 27 & 28 & 29 & 30 & 31 & 32 \\
+\hline
+Recolectar informaci\'on sobre algoritmos de selecci\'on de diccionarios para representaci\'on dispersa & \cellcolor{blue!50} & \cellcolor{blue!50} & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & \\
+\hline
+Recolectar informaci\'on sobre m\'etodos de codificaci\'on perceptual & \cellcolor{blue!50} & \cellcolor{blue!50} & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & \\
+\hline
+Replicar los algoritmos y m\'etodos revisados en el entorno de una se\~nal de video & & & \cellcolor{blue!50} & \cellcolor{blue!50} & & & & & & & & & & & & & & & & & & & & & & & & & & & & \\
+\hline
+Construir una tabla de resultados para los algoritmos replicados & & & & \cellcolor{blue!50} & &  & & & & & & & & & & & & & & & & & & & & & & & & & & \\
+\hline
+Analizar los resultados de los algoritmos replicados & & & & & \cellcolor{blue!50} &  & & & & & & & & & & & & & & & & & & & & & & & & & & \\
+\hline
+\hline
+Escojer un algoritmo de selecci\'on de diccionario y algunos m\'etodos de codificaci\'on perceptual en base a los resultados obtenidos en la evaluaci\'on & & & & & & \cellcolor{blue!50} &  & & & & & & & & & & & & & & & & & & & & & & & & & \\
+\hline
+Definir el modelo de integraci\'on del algoritmo de selecci\'on de diccionarios y codificaci\'on perceptual & & & & & & & \cellcolor{blue!50} & \cellcolor{blue!50} & \cellcolor{blue!50} & \cellcolor{blue!50} & & & & & & & & & & & & & & & & & & & & & & \\
+\hline
+Implementar un prototipo del modelo definido & & & & & & & & &  & \cellcolor{blue!50} & \cellcolor{blue!50} & \cellcolor{blue!50} & \cellcolor{blue!50} & & & & & & & & & & & & & & & & & & & \\
+\hline
+Evaluar el prototipo implementado en t\'erminos de rendimiento y exactitud & & & & & & & & & & & & &  & \cellcolor{blue!50} & & & & & & & & & & & & & & & & & & \\
+\hline
+Construir una tabla de resultados para el modelo implementado & & & & & & & & & & & & & & & \cellcolor{blue!50} & & & & & & & & & & & & & & & & & \\
+\hline
+Analizar los resultados del modelo implementado & & & & & & & & & & & & & & & \cellcolor{blue!50}  & \cellcolor{blue!50} & & & & & & & & & & & & & & & & \\
+\hline
+\hline
+Seleccionar un software de de referencia de un est\'andar de codificaci\'on de video & & & & & & & & & & & & & & & & \cellcolor{blue!50} & & & & & & & & & & & & & & & & \\
+\hline
+Definir un m\'etodo de integraci\'on del prototipo dise\~nado al software de referencia  & & & & & & & & & & & & & & & &  & \cellcolor{blue!50} & \cellcolor{blue!50} & \cellcolor{blue!50} & & & & & & & & & & & & &  \\
+\hline
+Definir una estrateg\'ia de transferencia del diccionario y vectores dispersos al decodificador & & & & & & & & & & & & & & & & &  &  &  & \cellcolor{blue!50} & \cellcolor{blue!50} & & & & & & & & & & & \\
+\hline
+Implementar el prototipo dise\~nado en el software de referencia (codificador y decodificador) & & & & & & & & & & & & & & & & & & & & &\cellcolor{blue!50} &  \cellcolor{blue!50} &  \cellcolor{blue!50}& \cellcolor{blue!50} &\cellcolor{blue!50} & \cellcolor{blue!50} & \cellcolor{blue!50} & & & & &  \\
+\hline
+\hline
+Seleccionar las m\'etricas de prueba y las secuencia de video & & & & & & & & & & & & & & & & & & & & & & & & & & & \cellcolor{blue!50} & &  & & & \\
+\hline
+Probar el proceso de codificaci\'on en el software de referencia sin modificaciones & & & & & & & & & & & & & & & & & & & & & & & & & & &\cellcolor{blue!50} & \cellcolor{blue!50}& \cellcolor{blue!50} & \cellcolor{blue!50} &  & \\
+\hline
+Probar el proceso de codificaci\'on en el software de referencia con la implementaci\'on del modelo propuesto & & & & & & & & & & & & & & & & & & & & & & & & & & &\cellcolor{blue!50} & \cellcolor{blue!50}& \cellcolor{blue!50} & \cellcolor{blue!50} &  &  \\
+\hline
+Construir una tabla de resultados para las pruebas realizadas basados en las m\'etricas seleccionadas  & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & \cellcolor{blue!50} & \\
+\hline
+Analizar los resultados obtenidos y presentar las conclusiones y trabajo futuro & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & \cellcolor{blue!50} & \cellcolor{blue!50} \\
+\hline
+\end{tabular}
+}
+\caption{Cronograma}
+\label{tab:schedule}
+\end{table}
+
+
+
+%\begin{table}
+%\resizebox{\textwidth}{!}{
+%\begin{tabular}{|p{10cm}||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c||c|c|c|c|}
+%\hline
+%Activities & \multicolumn{4}{c||}{month 1} & \multicolumn{4}{c||}{month 2} & \multicolumn{4}{c||}{month 3} & \multicolumn{4}{c||}{month 4} & \multicolumn{4}{c||}{month 5} & \multicolumn{4}{c||}{month 6} & \multicolumn{4}{c||}{month 7} & \multicolumn{4}{c||}{month 8} \\
+%\hline
+% & \cellcolor{blue!25} & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & & \\
+%\hline
+%\end{tabular}
+%}
+%\caption{Schedule}
+%\end{table}
+
+
